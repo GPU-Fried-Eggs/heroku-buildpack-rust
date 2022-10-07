@@ -20,11 +20,11 @@ if [ -d "$CARGO_HOME" ]; then
 else
   echo "-----> Installing rustup"
   mkdir -pv "$CARGO_HOME" && cd "$CARGO_HOME"
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh &&
-    chmod 755 rustup.sh &&
-    ./rustup.sh -y --default-toolchain stable &&
-    rm rustup.sh
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh && chmod 755 rustup.sh && ./rustup.sh -y --default-toolchain stable && rm rustup.sh
 fi
 
 echo "-----> Building Rust Application"
-cd "$BUILD_DIR" && cargo build --release;
+cd "$BUILD_DIR"
+cargo build --release
+mkdir -p target/release
+find "$CARGO_TARGET_DIR/release" -maxdepth 1 -type f -executable -exec cp -a -t target/release {} \;
